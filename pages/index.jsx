@@ -4,7 +4,7 @@ import { useState } from 'react';
 import appConfig from '../config.json'
 
 
-function GlobalStyle() {
+const GlobalStyle = () => {
   return (
     <>
       <style global jsx>{`
@@ -37,7 +37,7 @@ function GlobalStyle() {
 
 
 
-function Title(props) {
+const Title = (props) => {
   const Tag = props.tag;
   return (
     <>
@@ -76,7 +76,7 @@ function HomePage() {
 
 
 
-export default function PaginaInicial() {
+const PaginaInicial = () => {
 
   const [user, setUser] = useState('PedroEduardo68');
 
@@ -198,3 +198,7 @@ export default function PaginaInicial() {
     </>
   );
 }
+
+
+
+export default PaginaInicial;
