@@ -1,4 +1,6 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+
+import { useState } from 'react';
 import appConfig from '../config.json'
 
 
@@ -75,7 +77,8 @@ function HomePage() {
 
 
 export default function PaginaInicial() {
-  const username = 'PedroEduardo68';
+
+  const [user, setUser] = useState('PedroEduardo68');
 
   return (
     <>
@@ -106,18 +109,28 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Title tag="h2">Boas vindas de Space Dev !</Title>
+            <Title tag="h2">Boas vindas Space Dev!</Title>
             <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
               {appConfig.name}
             </Text>
 
             <TextField
               fullWidth
+              onChange={(event) => {
+                event.preventDefault();
+                setUser(event.target.value)
+                if (event.target.value !== '') {
+                  setUser(event.target.value);
+                } else {
+                  setUser('PedroEduardo68');
+                }
+              }}
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
@@ -127,9 +140,10 @@ export default function PaginaInicial() {
                 },
               }}
             />
+            {/* 
             <Button
               type='submit'
-              label='Entrar'
+              label='OpenGitHub'
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -137,8 +151,9 @@ export default function PaginaInicial() {
                 mainColorLight: appConfig.theme.colors.primary[400],
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
-            />
+            />*/}
           </Box>
+
           {/* Formulário */}
 
 
@@ -163,7 +178,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://github.com/${username}.png`}
+              src={`https://github.com/${user}.png`}
             />
             <Text
               variant="body4"
@@ -174,7 +189,7 @@ export default function PaginaInicial() {
                 borderRadius: '1000px'
               }}
             >
-              {username}
+              {user}
             </Text>
           </Box>
           {/* Photo Area */}
