@@ -1,39 +1,9 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import appConfig from '../config.json'
-import { useRouter } from 'next/router'
 
-const GlobalStyle = () => {
-  return (
-    <>
-      <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-    </>
-  );
-}
+
 
 
 
@@ -79,11 +49,11 @@ function HomePage() {
 const PaginaInicial = () => {
 
   const [user, setUser] = useState('PedroEduardo68');
-  const [roteamento] = useRouter();
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
+
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -145,7 +115,7 @@ const PaginaInicial = () => {
                 },
               }}
             />
-            {/* 
+
             <Button
               type='submit'
               label='OpenGitHub'
@@ -156,7 +126,7 @@ const PaginaInicial = () => {
                 mainColorLight: appConfig.theme.colors.primary[400],
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
-            />*/}
+            />
           </Box>
 
           {/* Formulário */}
