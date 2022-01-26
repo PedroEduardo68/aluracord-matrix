@@ -2,7 +2,7 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 
 import { useState } from 'react';
 import appConfig from '../config.json'
-
+import { useRouter } from 'next/router'
 
 const GlobalStyle = () => {
   return (
@@ -79,6 +79,7 @@ function HomePage() {
 const PaginaInicial = () => {
 
   const [user, setUser] = useState('PedroEduardo68');
+  const [roteamento] = useRouter();
 
   return (
     <>
@@ -109,7 +110,11 @@ const PaginaInicial = () => {
           {/* Formulário */}
           <Box
             as="form"
-
+            onSubmit={(event) => {
+              event.preventDefault();
+              console.log("submit");
+              roteamento.push('./chat')
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
