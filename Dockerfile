@@ -1,10 +1,24 @@
+
+
+#de imagens....  Imegns download 
 FROM node
+
+#directoy to job container
 WORKDIR /home/app
+
+
+# copy dependency
 copy package.json .
+
+#run comand to install apps
 RUN npm install -g npm
 RUN npm install package.json
+
+# copy directory local actual to directory in cotainer docker
 copy  . .
-ENTRYPOINT npm run dev
+
+#run the point in dev 
+ENTRYPOINT npm run dev       
 
 
 #
