@@ -2,7 +2,21 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import { useState } from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js'
 
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMzMTg0MCwiZXhwIjoxOTU4OTA3ODQwfQ.U1mWlrkrs38kIKwGn1z6UqZiPYS15eGr4MT6PXvbsrI"
+const SUPABASE_URL = "https://twnvrhnkkclcutteldzm.supabase.co"
+
+const CLIENT_SUPABASE = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+
+
+const dadosDoSupabase = CLIENT_SUPABASE
+  .from('mensagens')
+  .select("*")
+  .then((dados) => {
+    console.log("dados da consulta", dados)
+  })
 
 
 const ChatPage = () => {
