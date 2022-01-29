@@ -83,7 +83,7 @@ const PaginaInicial = () => {
             onSubmit={(event) => {
               event.preventDefault();
               console.log("submit");
-              roteamento.push('./chat')
+              roteamento.push(`/chat?username=${user}`)
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',

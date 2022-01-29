@@ -2,16 +2,29 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import { useState } from 'react';
 import appConfig from '../config.json';
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createClient, supabaseClient } from '@supabase/supabase-js'
 import { useEffect } from 'react';
+import ButtonSendSticker from '../src/ButtonSendSticker.jsx'
+
+
+
+
+
 
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMzMTg0MCwiZXhwIjoxOTU4OTA3ODQwfQ.U1mWlrkrs38kIKwGn1z6UqZiPYS15eGr4MT6PXvbsrI"
 const SUPABASE_URL = "https://twnvrhnkkclcutteldzm.supabase.co"
+import { useRouter } from 'next/router'
+const cliente_supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const CLIENT_SUPABASE = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-
-
+const escutaMensagemEmTempoReal = (adicionaMensagem) => {
+  return cliente_supabase
+    .from('mensagens')
+    .on('INSERT', (respostaLive) => {
+      adicionaMensagem(respostaLive.new);
+    })
+    .subscribe();
+}
 
 
 
@@ -34,7 +47,8 @@ const ChatPage = () => {
 
 
   */
-
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username;
   const cliente_supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
   useEffect(() => {
@@ -44,6 +58,16 @@ const ChatPage = () => {
       .then(({ data }) => {
         setListaDeMensagens(data)
       })
+
+    escutaMensagemEmTempoReal((novaMensagem) => {
+      setListaDeMensagens((valoratualDaLista) => {
+        return [
+          data[0],
+          ...valoratualDaLista,
+
+        ]
+      })
+    });
   }, [])
 
 
@@ -51,7 +75,13 @@ const ChatPage = () => {
 
 
   const [mensagem, setMensagem] = useState("")
-  const [listaDeMensagens, setListaDeMensagens] = useState([]);
+  const [listaDeMensagens, setListaDeMensagens] = useState([
+    {
+      id: 1,
+      de: 'omariosouto',
+      texto: ':sticker: URL_daP=_imagem',
+    }
+  ]);
 
 
 
@@ -60,10 +90,10 @@ const ChatPage = () => {
   const handleNovaMensagem = (novaMensagem) => {
     const mensagem = {
       //id: listaDeMensagens.length + 1,
-      de: 'JoaoAlvesC',
+      de: usuarioLogado,
       texto: novaMensagem,
     }
-
+    {/*
     cliente_supabase
       .from('mensagens')
       .insert([mensagem])
@@ -73,7 +103,7 @@ const ChatPage = () => {
           ...listaDeMensagens,
         ])
       })
-
+    */}
     //setListaDeMensagens([mensagem, ...listaDeMensagens])
     setMensagem('')
   }
@@ -164,6 +194,9 @@ const ChatPage = () => {
                 color: appConfig.theme.colors.neutrals[200],
               }}
             />
+            <ButtonSendSticker onStickerClick={(sticker) => {
+              handleNovaMensagem(`:sticker: ${sticker}`)
+            }} />
           </Box>
         </Box>
       </Box>
@@ -250,6 +283,13 @@ function MessageList(props) {
               </Text>
             </Box>
             {mensagem.texto}
+            {mensagem.texto.startsWith(':sticker:')
+              ? (
+                <Image src={mensagem.texto.replace(':sticker:')} />
+              )
+              : (
+                mensagem.texto
+              )}
           </Text>
         )
       })}
