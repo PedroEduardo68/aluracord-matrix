@@ -232,7 +232,7 @@ function MessageList(props) {
     <Box
       tag="ul"
       styleSheet={{
-        //overflow: 'scroll',
+        overflow: 'scroll',
         display: 'flex',
         flexDirection: 'column-reverse',
         flex: 1,
