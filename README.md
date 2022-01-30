@@ -1,7 +1,7 @@
 <h1 align="center">Alura Cord </h1>
 
 <h3 align="center">
-    🔗 REACT.JS 🔗 NEXT.js 
+    🔗 REACT.JS 🔗 NEXT.js  🔗Docker
 </h3>
 
 
@@ -14,6 +14,7 @@
 
 <h4 align="center"> 
 	🚧 ALURA CORD 🚀 Done...  🚧
+
 </h4>
 
 
