@@ -58,16 +58,20 @@ const ChatPage = () => {
       .then(({ data }) => {
         setListaDeMensagens(data)
       })
-
-    escutaMensagemEmTempoReal((novaMensagem) => {
+    
+    const subscription = escutaMensagemEmTempoReal((novaMensagem) => {
       setListaDeMensagens((valoratualDaLista) => {
         return [
-          data[0],
+          novaMensagem,
           ...valoratualDaLista,
 
         ]
       })
     });
+
+    return () =>{
+      subscription.unsubscribe();
+    }
   }, [])
 
 
@@ -75,35 +79,32 @@ const ChatPage = () => {
 
 
   const [mensagem, setMensagem] = useState("")
-  const [listaDeMensagens, setListaDeMensagens] = useState([
-    {
-      id: 1,
-      de: 'omariosouto',
-      texto: ':sticker: URL_daP=_imagem',
-    }
-  ]);
+  const [listaDeMensagens, setListaDeMensagens] = useState([  ]);
 
 
 
 
 
   const handleNovaMensagem = (novaMensagem) => {
+  
     const mensagem = {
       //id: listaDeMensagens.length + 1,
       de: usuarioLogado,
       texto: novaMensagem,
     }
-    {/*
+    
     cliente_supabase
       .from('mensagens')
       .insert([mensagem])
       .then(({ data }) => {
+        console.log('mensagem',data )
+        {/*
         setListaDeMensagens([
           data[0],
           ...listaDeMensagens,
-        ])
+        ])      */}
       })
-    */}
+
     //setListaDeMensagens([mensagem, ...listaDeMensagens])
     setMensagem('')
   }
@@ -282,10 +283,10 @@ function MessageList(props) {
                 {(new Date().toLocaleDateString())}
               </Text>
             </Box>
-            {mensagem.texto}
+
             {mensagem.texto.startsWith(':sticker:')
               ? (
-                <Image src={mensagem.texto.replace(':sticker:')} />
+                <Image src={mensagem.texto.replace(':sticker:','')} />
               )
               : (
                 mensagem.texto
